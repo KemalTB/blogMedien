@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ErrorBoundary from './components/ErrorBoundary';
+import { Provider } from 'react-redux';
+import AppRouter from './router/AppRouter';
+import { ToastContainer } from 'react-toastify';
+import Store from './app/store';
+
 
 function App() {
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#333',
+        },
+        secondary: {
+          main: '#666',
+          second: '#161C24'
+          },
+          },
+          });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <Provider store={Store}>
+          <AppRouter/>
+        </Provider>
+        <ToastContainer/>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
