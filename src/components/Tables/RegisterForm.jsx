@@ -16,13 +16,13 @@ export const SignupSchema = Yup.object().shape({
     .required("Bu alan zorunludur!")
     .min(3, "Username en az 3 karakter olmalıdır!"),
    password: Yup.string()
-    .required()
+    .required("Password is mandatory")
     .min(8)
     .matches(/\d+/, "Digit karakter içermelidir!")
     .matches(/[a-z]/, "Küçük harf içermelidir!")
     .matches(/[A-Z]/, "Büyük harf içermelidir!")
     .matches(/[@$?!%&*]+/, "Özel karakter içermelidir(@$?!%&*)"),
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email("Invalid email").required("Email is mandatory"),
   firstName: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
@@ -59,7 +59,7 @@ const SignUpForm = ({
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField
             name="username" //formik name attributedından eşleştirme yapıyor.
-            label="Username"
+            label="Username *"
             value={values.username}
             onChange={handleChange}
             onBlur={handleBlur} // kullanıcının input alanından ayrıldığını yaklayan event
@@ -68,7 +68,7 @@ const SignUpForm = ({
             // touched da kullanıcının inputa tıklayıp tıklamadığını yakalıyor
           />
           <TextField
-            label="First Name"
+            label="First Name *"
             name="firstName"
             type="text"
             variant="outlined"
@@ -79,7 +79,7 @@ const SignUpForm = ({
             error={touched.firstName && Boolean(errors.firstName)}
           />
           <TextField
-            label="Last Name"
+            label="Last Name *"
             name="lastName"
             type="text"
             variant="outlined"
@@ -90,7 +90,7 @@ const SignUpForm = ({
             error={touched.lastName && Boolean(errors.lastName)}
           />
           <TextField
-            label="Email"
+            label="Email Address *"
             name="email"
             type="email"
             variant="outlined"
@@ -125,7 +125,7 @@ const SignUpForm = ({
             error={touched.bio && Boolean(errors.bio)}
           />
           <TextField
-            label="Password"
+            label="Password *"
             name="password"
             id="password"
             type="password"
@@ -140,6 +140,7 @@ const SignUpForm = ({
           <Button
             type="submit"
             variant="contained"
+            color="primary"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Loading..." : "Sign Up"}

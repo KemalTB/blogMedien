@@ -37,7 +37,9 @@ const Register = () => {
               height: 40,
             }}
           >
-            <LockIcon size="30" />
+            <div style={{ backgroundColor: 'green', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '10px', borderRadius: '50%' }}>
+    <LockIcon style={{ color: 'white', fontSize: 30 }} />
+  </div>
           </Avatar>
           <Typography
             variant="h4"
@@ -45,7 +47,7 @@ const Register = () => {
             mb={2}
             color="secondary.light"
           >
-            Register
+            Sign Up
           </Typography>
 
           <Formik
@@ -68,7 +70,7 @@ const Register = () => {
             component={(props) => <RegisterForm {...props} />} //* formikin bize verdiğim metotlar,değişkenler props içersinde geliyor biz de onları RegisterForm componentine göndermiş olduk.
           ></Formik>
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
-            <Link to="/">Already have an account? Sign in</Link>
+            <Link to="/login">Already have an account? Sign in</Link>
           </Box>
         </Grid>
 
