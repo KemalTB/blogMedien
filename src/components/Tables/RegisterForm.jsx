@@ -68,17 +68,6 @@ const SignUpForm = ({
             // touched da kullanıcının inputa tıklayıp tıklamadığını yakalıyor
           />
           <TextField
-            label="User Name"
-            name="userName"
-            type="text"
-            variant="outlined"
-            value={values.userName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            helperText={touched.userName && errors.userName}
-            error={touched.userName && Boolean(errors.userName)}
-          />
-          <TextField
             label="First Name"
             name="firstName"
             type="text"
@@ -112,11 +101,13 @@ const SignUpForm = ({
             error={touched.email && Boolean(errors.email)}
           />
           <TextField
-            label="Image"
+            label="Image URL"
             name="image"
-            type="link"
+            type="text"
             variant="outlined"
-            value={values.image}
+            value={values.image && (
+                   <img src={values.image} alt="Preview" style={{ width: '100px', height: '100px' }} /> 
+                   )}
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.image && errors.image}
