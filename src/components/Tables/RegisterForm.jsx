@@ -1,21 +1,20 @@
+import React, { useState } from 'react';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Form } from "formik";
 import * as Yup from "yup";
 
-//! Yup ile istediğimiz alanlara istediğimiz validasyon koşullarını
-//  oluşturuyoruz. Sonra oluşturduğumuz bu şemayı formike tanımlayarak
-//  kullanıyoruz. Böylelikle formik hem formumuzu yönetiyor hem de verdiğimiz
-//  validationSchema yı uyguluyor. Dikkat edilmesi gereken husus; formikte
-//  tanımladığımız initialValues daki keylerle, Yupta tanımladığımız keylerin
-//  aynı olması. Eğer bir harf bile farklı olsa o alanla ilgili yazdığınız
-//  validation çalışmaz.
+// Yup ile şema tanımlaması
 export const SignupSchema = Yup.object().shape({
   username: Yup.string()
     .required("Bu alan zorunludur!")
     .min(3, "Username en az 3 karakter olmalıdır!"),
-   password: Yup.string()
+  password: Yup.string()
     .required("Password is mandatory")
     .min(8)
     .matches(/\d+/, "Digit karakter içermelidir!")
@@ -34,7 +33,6 @@ export const SignupSchema = Yup.object().shape({
   image: Yup.string()
     .min(20, "Too Short!")
     .max(120, "Too Long!"),
-    // .required("Required"),
   city: Yup.string()
     .min(3, "Too Short!")
     .max(20, "Too Long!")
@@ -42,7 +40,6 @@ export const SignupSchema = Yup.object().shape({
   bio: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
-    // .required("Required")
 });
 
 const SignUpForm = ({
@@ -53,19 +50,26 @@ const SignUpForm = ({
   handleBlur,
   isSubmitting,
 }) => {
+  // Şifre görünürlüğü state'i
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Şifre görünürlüğü kontrol fonksiyonları
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event) => event.preventDefault();
+
   return (
     <div>
       <Form>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {/* Diğer input alanları */}
           <TextField
-            name="username" //formik name attributedından eşleştirme yapıyor.
+            name="username"
             label="Username *"
             value={values.username}
             onChange={handleChange}
-            onBlur={handleBlur} // kullanıcının input alanından ayrıldığını yaklayan event
-            helperText={touched.username && errors.username} //validationda verdiğimiz kalıba uymazsa ilgili mesajları göstermesi için errors dan gelen mesajı yakalıyoruz.
-            error={touched.username && Boolean(errors.username)} //validationda verdiğimiz kalıba uymazsa rengi errora çevirmesi için error attribute ı benden false/true degeri bekliyor ondan dolayı daha sağlıklı olması için boolean deger döndürüyoruz.
-            // touched da kullanıcının inputa tıklayıp tıklamadığını yakalıyor
+            onBlur={handleBlur}
+            helperText={touched.username && errors.username}
+            error={touched.username && Boolean(errors.username)}
           />
           <TextField
             label="First Name *"
@@ -106,8 +110,8 @@ const SignUpForm = ({
             type="text"
             variant="outlined"
             value={values.image && (
-                   <img src={values.image} alt="Preview" style={{ width: '100px', height: '100px' }} /> 
-                   )}
+              <img src={values.image} alt="Preview" style={{ width: '100px', height: '100px' }} />
+            )}
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.image && errors.image}
@@ -128,13 +132,27 @@ const SignUpForm = ({
             label="Password *"
             name="password"
             id="password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             variant="outlined"
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.password && errors.password}
             error={touched.password && Boolean(errors.password)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           <Button

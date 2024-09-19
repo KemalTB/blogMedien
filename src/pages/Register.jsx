@@ -70,7 +70,10 @@ const Register = () => {
             component={(props) => <RegisterForm {...props} />} //* formikin bize verdiğim metotlar,değişkenler props içersinde geliyor biz de onları RegisterForm componentine göndermiş olduk.
           ></Formik>
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
-            <Link to="/login">Already have an account? Sign in</Link>
+          Already have an account?
+          <Link to="/login" className="text-red-500">
+    Sign in
+  </Link>
           </Box>
         </Grid>
 

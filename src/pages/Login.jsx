@@ -9,11 +9,11 @@ import { Link } from "react-router-dom";
 import AuthHeader from "../components/AuthHeader";
 // import AuthImage from "../components/AuthImage";
 import { Formik } from "formik";
-import useAuthCall from "../hooks/useAuthCall";
 import LoginForm, { loginScheme } from "../components/Tables/LoginForm";
+import useAuthCAll from "../hooks/useAuthCall";
 
 const Login = () => {
-  const { login } = useAuthCall()
+  const { login } = useAuthCAll()
   return (
     <Container maxWidth="lg">
       <Grid
@@ -56,9 +56,10 @@ const Login = () => {
               
             </Formik>
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
-            <Link to="/register">
-              Don't have an account? Sign Up
-            </Link>
+          Don't have an account?
+          <Link to="/register" className="text-red-500">
+    Sign Up
+  </Link>
           </Box>
         </Grid>
 
