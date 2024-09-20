@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -52,15 +52,34 @@ const SignUpForm = ({
 }) => {
   // Şifre görünürlüğü state'i
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    length: false,
+    digit: false,
+    lowercase: false,
+    uppercase: false,
+    specialChar: false,
+  });
 
   // Şifre görünürlüğü kontrol fonksiyonları
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = (event) => event.preventDefault();
 
+
+  useEffect(() => {
+    const password = values.password || '';
+    setPasswordCriteria({
+      length: password.length >= 8,
+      digit: /\d/.test(password),
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      specialChar: /[@$?!%&*]/.test(password),
+    });
+  }, [values.password]);
+
   return (
     <div>
       <Form>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           {/* Diğer input alanları */}
           <TextField
             name="username"
@@ -154,6 +173,27 @@ const SignUpForm = ({
               ),
             }}
           />
+
+          {/* Şifre gereksinimlerini listele */}
+          <Box>
+            <ul>
+              <li style={{ color: passwordCriteria.length ? 'green' : 'orange' }}>
+                En az 8 karakter olmalıdır
+              </li>
+              <li style={{ color: passwordCriteria.digit ? 'green' : 'orange' }}>
+                En az bir rakam içermelidir (0-9)
+              </li>
+              <li style={{ color: passwordCriteria.lowercase ? 'green' : 'orange' }}>
+                En az bir küçük harf içermelidir (a-z)
+              </li>
+              <li style={{ color: passwordCriteria.uppercase ? 'green' : 'orange' }}>
+                En az bir büyük harf içermelidir (A-Z)
+              </li>
+              <li style={{ color: passwordCriteria.specialChar ? 'green' : 'orange' }}>
+                Özel karakter içermelidir (@$?!%&*)
+              </li>
+            </ul>
+          </Box>
 
           <Button
             type="submit"

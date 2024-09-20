@@ -38,11 +38,11 @@ const Register = () => {
             }}
           >
             <div style={{ backgroundColor: 'green', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '10px', borderRadius: '50%' }}>
-    <LockIcon style={{ color: 'white', fontSize: 30 }} />
+    <LockIcon style={{ color: 'white', fontSize: 35 }} />
   </div>
           </Avatar>
           <Typography
-            variant="h4"
+            variant="h5"
             align="center"
             mb={2}
             color="secondary.light"
