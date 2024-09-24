@@ -35,8 +35,7 @@ export const SignupSchema = Yup.object().shape({
     .max(120, "Too Long!"),
   city: Yup.string()
     .min(3, "Too Short!")
-    .max(20, "Too Long!")
-    .required("Required"),
+    .max(20, "Too Long!"),
   bio: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
@@ -135,6 +134,17 @@ const SignUpForm = ({
             onBlur={handleBlur}
             helperText={touched.image && errors.image}
             error={touched.image && Boolean(errors.image)}
+          />
+          <TextField
+            label="City"
+            name="city"
+            type="text"
+            variant="outlined"
+            value={values.city}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            helperText={touched.city && errors.city}
+            error={touched.city && Boolean(errors.city)}
           />
           <TextField
             label="Bio"

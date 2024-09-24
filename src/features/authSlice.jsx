@@ -37,6 +37,9 @@ const authSlice = createSlice({
   },
 });
 
+export const selectCurrentUser = (state) => state.auth.currentUser;
+
+
 export const {
   fetchStart,
   registerSuccess,
